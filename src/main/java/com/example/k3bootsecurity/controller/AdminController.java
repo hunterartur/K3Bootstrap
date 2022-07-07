@@ -83,6 +83,7 @@ public class AdminController {
         if (bindingResult.hasErrors()) {
             return "/createUser";
         } else {
+            //сделать проверку на null boolean полей
             String password = passwordEncoder.encode(userEntity.getPassword());
             userEntity.setPassword(password);
             entityAppService.saveOrUpdate(userEntity);

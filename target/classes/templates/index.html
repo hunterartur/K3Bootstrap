@@ -53,6 +53,7 @@
                             </nav>
                             <div class="tab-content" id="nav-tabContent">
                                 <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                                    <caption><h2>All users</h2></caption>
                                     <table class="table table-striped">
                                         <tr>
                                             <th>Name</th>
@@ -93,56 +94,76 @@
                                     <form th:action="@{/admin/create}" th:method="post" th:object="${newUser}">
 
                                         <p class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</p>
-                                        <label for="name">Name</label>
-                                        <input id="name" th:placeholder="name" type="text" th:field="*{name}">
-                                        <br>
-                                        <br>
+<!--                                        <label for="name">Name</label>-->
+<!--                                        <input id="name" th:placeholder="name" type="text" th:field="*{name}">-->
+                                        <div class="input-group">
+                                            <span class="input-group-text" id="input-group-left-example">First name</span>
+                                            <input id="name" th:placeholder="name" type="text" th:field="*{name}" class="form-control" aria-label="Username" aria-describedby="input-group-left">
+                                        </div>
                                         <p class="error" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">surname Error</p>
-                                        <label for="name">Surname</label>
-                                        <input id="surname" th:placeholder="surname" type="text" th:field="*{surname}">
-                                        <br>
-                                        <br>
+<!--                                        <label for="name">Surname</label>-->
+<!--                                        <input id="surname" th:placeholder="surname" type="text" th:field="*{surname}">-->
+                                        <div class="input-group">
+                                            <span class="input-group-text" id="input-group-left-example">Last name</span>
+                                            <input id="surname" th:placeholder="surname" type="text" th:field="*{surname}" class="form-control" aria-label="Username" aria-describedby="input-group-left">
+                                        </div>
                                         <p class="error" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">age Error</p>
-                                        <label for="age">Age</label>
-                                        <input id="age" type="text" th:placeholder="age" th:field="*{age}">
-                                        <br>
-                                        <br>
+<!--                                        <label for="age">Age</label>-->
+<!--                                        <input id="age" type="text" th:placeholder="age" th:field="*{age}">-->
+                                        <div class="input-group">
+                                            <span class="input-group-text" id="input-group-left-example">Age</span>
+                                            <input id="age" type="text" th:placeholder="age" th:field="*{age}" class="form-control" aria-label="Username" aria-describedby="input-group-left">
+                                        </div>
                                         <p class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">email Error</p>
-                                        <label for="email">Email</label>
-                                        <input id="email" th:placeholder="email" type="text" th:field="*{email}">
-                                        <br>
-                                        <br>
+<!--                                        <label for="email">Email</label>-->
+<!--                                        <input id="email" th:placeholder="email" type="text" th:field="*{email}">-->
+                                        <div class="input-group">
+                                            <span class="input-group-text" id="input-group-left-example">Email</span>
+                                            <input id="email" th:placeholder="email" type="text" th:field="*{email}" class="form-control" aria-label="Username" aria-describedby="input-group-left">
+                                        </div>
                                         <p class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">password Error</p>
-                                        <label for="password">Password</label>
-                                        <input id="password" th:placeholder="password" type="password" th:field="*{password}">
-                                        <br>
-                                        <br>
-                                        Enabled
-                                        <p><input name="enabled" type="radio" value="1" th:checked="${enabled}">Enabled</p>
-                                        <p><input name="enabled" type="radio"  value="0"  th:checked="*{enabled}">Not Enadled</p>
-                                        <br>
-                                        Locked
-                                        <p><input name="locked" type="radio" value="1" th:checked="${locked}">Enabled</p>
-                                        <p><input name="locked" type="radio"  value="0"  th:checked="*{locked}">Not Enadled</p>
-                                        <br>
-                                        Expired
-                                        <p><input name="expired" type="radio" value="1" th:checked="${expired}">Enabled</p>
-                                        <p><input name="expired" type="radio"  value="0"  th:checked="*{expired}">Not Enadled</p>
-                                        <br>
+<!--                                        <label for="password">Password</label>-->
+<!--                                        <input id="password" th:placeholder="password" type="password" th:field="*{password}">-->
+                                        <div class="input-group">
+                                            <span class="input-group-text" id="input-group-left-example">Password</span>
+                                            <input id="password" th:placeholder="password" type="password" th:field="*{password}" class="form-control" aria-label="Username" aria-describedby="input-group-left">
+                                        </div>
+<!--                                        Enabled-->
+<!--                                        <p><input name="enabled" type="radio" value="1" th:checked="${enabled}">Enabled</p>-->
+<!--                                        <p><input name="enabled" type="radio"  value="0"  th:checked="*{enabled}">Not Enadled</p>-->
+                                        <div class="form-check">
+                                            <input class="form-check-input" th:checked="*{enabled}" th:name="enabled" type="checkbox" id="flexCheckChecked" checked>
+                                            <label class="form-check-label" for="flexCheckChecked">
+                                                Enabled
+                                            </label>
+                                        </div>
+<!--                                        Locked-->
+<!--                                        <p><input name="locked" type="radio" value="1" th:checked="${locked}">Enabled</p>-->
+<!--                                        <p><input name="locked" type="radio"  value="0"  th:checked="*{locked}">Not Enadled</p>-->
+                                        <div class="form-check">
+                                            <input class="form-check-input" th:checked="*{locked}" type="checkbox" id="flexCheckDefault" checked>
+                                            <label class="form-check-label" for="flexCheckChecked">
+                                                Locked
+                                            </label>
+                                        </div>
+<!--                                        Expired-->
+<!--                                        <p><input name="expired" type="radio" value="1" th:checked="${expired}">Enabled</p>-->
+<!--                                        <p><input name="expired" type="radio"  value="0"  th:checked="*{expired}">Not Enadled</p>-->
+                                        <div class="form-check">
+                                            <input class="form-check-input" th:checked="*{expired}" type="checkbox" id="flexCheckDefault" checked>
+                                            <label class="form-check-label" for="flexCheckChecked">
+                                                Expired
+                                            </label>
+                                        </div>
                                         <label for="role">Role</label>
-                                        <select id="role" name="roles" multiple>
+                                        <select id="role" name="roles" multiple class="form-select" aria-label="Default select example">
                                             <option th:each="role : ${roleList}"
                                                     th:value="${role.id}"
                                                     th:text="${role.getName()}">User</option>
                                         </select>
-
-                                        <!--            <th:block th:each="role : ${roleList}">-->
-                                        <!--                <option th:value="${role.name}" th:text="${role.getName()}">User</option>-->
-                                        <!--            </th:block>-->
-
-                                        <br>
-                                        <br>
-                                        <input type="submit" value="save">
+                                        <div class="d-grid gap-2 col-6 mx-auto">
+                                            <input type="submit" value="save" class="btn btn-primary">
+                                        </div>
                                     </form>
                                 </div>
                             </div>
