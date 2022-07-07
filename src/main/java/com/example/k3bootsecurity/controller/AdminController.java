@@ -84,6 +84,9 @@ public class AdminController {
             return "/createUser";
         } else {
             //сделать проверку на null boolean полей
+            userEntity.setEnabled(userEntity.getEnabled() != null);
+            userEntity.setExpired(userEntity.getExpired() != null);
+            userEntity.setLocked(userEntity.getLocked() != null);
             String password = passwordEncoder.encode(userEntity.getPassword());
             userEntity.setPassword(password);
             entityAppService.saveOrUpdate(userEntity);
