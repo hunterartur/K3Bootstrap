@@ -33,8 +33,11 @@ public class AdminController {
     public String allUsers(ModelMap model) {
         List<UserEntity> entities = entityAppService.getAll();
         List<User> users = entities.stream().map(UserEntity::toUser).collect(Collectors.toList());
+        List<Role> roleList = roleAppService.getAll();
         model.addAttribute("users", users);
-        return "listUsers";
+        model.addAttribute("newUser", new UserEntity());
+        model.addAttribute("roleList", roleList);
+        return "index";
     }
 
     @PostMapping(path = "/updateUser")

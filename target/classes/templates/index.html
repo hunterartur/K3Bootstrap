@@ -3,10 +3,159 @@
       xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-    <meta charset="UTF-8">
-    <title>Spring Security Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/mainStyle.css">
+    <title>Bootstrap Example</title>
 </head>
 <body>
-<a sec:authorize="isAuthenticated()" href="/logout">Logout</a>
+
+<div class="container-fluid">
+    <div class="row text-light bg-dark my-header ">
+        <div class="col-lg">
+            <div class="row">
+                <div class="col-lg-11">
+                    admin@mail.ru with roles: ADMIN USER
+                </div>
+                <div class="col-lg-1">
+                    <a class="link-secondary" sec:authorize="isAuthenticated()" href="/logout">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg">
+            <div class="d-flex align-items-start">
+                <div class="nav flex-column nav-pills me-3 bok-nav" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                    <a class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">
+                        Admin
+                    </a>
+                    <a class="nav-link" id="v-pills-settings-tab" data-bs-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">
+                        User
+                    </a>
+                </div>
+                <div class="tab-content" id="v-pills-tabContent">
+                    <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                        <div class="row">
+                            <h1>Admin panel</h1>
+                        </div>
+                        <div class="row">
+                            <nav class="nav nav-tabs" id="nav-tab" role="tablist">
+                                <a class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">
+                                    User table
+                                </a>
+                                <a class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">
+                                    New user
+                                </a>
+                            </nav>
+                            <div class="tab-content" id="nav-tabContent">
+                                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                                    <table class="table table-striped">
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Lastname</th>
+                                            <th>Age</th>
+                                            <th>Email</th>
+                                            <th>Operation</th>
+                                        </tr>
+                                        <th:block th:each="user : ${users}">
+                                            <tr>
+                                                <td th:text="${user.getName()}">name</td>
+                                                <td th:text="${user.getSurname()}">lastname</td>
+                                                <td th:text="${user.getAge()}">age</td>
+                                                <td th:text="${user.getEmail()}">Email</td>
+                                                <td>
+                                                    <!--                <div>-->
+                                                    <!--                    <a th:href="@{/admin/updateUser(id=${user.getId()})}">update user</a>-->
+                                                    <div>
+                                                        <form th:action="@{/admin/updateUser}" th:method="post">
+                                                            <input type="hidden" th:value="${user.getId()}" th:name="id">
+                                                            <input type="submit" value="Edit">
+                                                        </form>
+                                                    </div>
+                                                    <!--                <a th:href="@{/admin/removeUser(id=${user.getId()})}">delete user</a>-->
+                                                    <div>
+                                                        <form th:action="@{/admin/deleteUser}" th:method="delete">
+                                                            <input type="hidden" th:value="${user.getId()}" th:name="id">
+                                                            <input type="submit" value="Delete">
+                                                        </form>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </th:block>
+                                    </table>
+                                </div>
+                                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                                    <h1>Create user</h1>
+                                    <form th:action="@{/admin/create}" th:method="post" th:object="${newUser}">
+
+                                        <p class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</p>
+                                        <label for="name">Name</label>
+                                        <input id="name" th:placeholder="name" type="text" th:field="*{name}">
+                                        <br>
+                                        <br>
+                                        <p class="error" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">surname Error</p>
+                                        <label for="name">Surname</label>
+                                        <input id="surname" th:placeholder="surname" type="text" th:field="*{surname}">
+                                        <br>
+                                        <br>
+                                        <p class="error" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">age Error</p>
+                                        <label for="age">Age</label>
+                                        <input id="age" type="text" th:placeholder="age" th:field="*{age}">
+                                        <br>
+                                        <br>
+                                        <p class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">email Error</p>
+                                        <label for="email">Email</label>
+                                        <input id="email" th:placeholder="email" type="text" th:field="*{email}">
+                                        <br>
+                                        <br>
+                                        <p class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">password Error</p>
+                                        <label for="password">Password</label>
+                                        <input id="password" th:placeholder="password" type="password" th:field="*{password}">
+                                        <br>
+                                        <br>
+                                        Enabled
+                                        <p><input name="enabled" type="radio" value="1" th:checked="${enabled}">Enabled</p>
+                                        <p><input name="enabled" type="radio"  value="0"  th:checked="*{enabled}">Not Enadled</p>
+                                        <br>
+                                        Locked
+                                        <p><input name="locked" type="radio" value="1" th:checked="${locked}">Enabled</p>
+                                        <p><input name="locked" type="radio"  value="0"  th:checked="*{locked}">Not Enadled</p>
+                                        <br>
+                                        Expired
+                                        <p><input name="expired" type="radio" value="1" th:checked="${expired}">Enabled</p>
+                                        <p><input name="expired" type="radio"  value="0"  th:checked="*{expired}">Not Enadled</p>
+                                        <br>
+                                        <label for="role">Role</label>
+                                        <select id="role" name="roles" multiple>
+                                            <option th:each="role : ${roleList}"
+                                                    th:value="${role.id}"
+                                                    th:text="${role.getName()}">User</option>
+                                        </select>
+
+                                        <!--            <th:block th:each="role : ${roleList}">-->
+                                        <!--                <option th:value="${role.name}" th:text="${role.getName()}">User</option>-->
+                                        <!--            </th:block>-->
+
+                                        <br>
+                                        <br>
+                                        <input type="submit" value="save">
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+                            dddddddddddddddddddddddd
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
 </body>
 </html>
