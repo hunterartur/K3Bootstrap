@@ -187,4 +187,11 @@ public class UserEntity implements UserDetails {
         model.setEmail((this.getEmail()));
         return model;
     }
+
+    public void fromUser(User user) {
+        this.setName(user.getName());
+        this.setSurname(user.getSurname());
+        this.setAge(user.getAge());
+        this.setEmail(user.getEmail());
+    }
 }

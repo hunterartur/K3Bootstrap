@@ -40,26 +40,16 @@ public class AdminController {
         return "index";
     }
 
-    @PostMapping(path = "/updateUser")
-    public String updateUser(@RequestParam Long id, Model model) {
-        User updateUser = entityAppService.getById(id).toUser();
-        model.addAttribute("user", updateUser);
-        return "updateUser";
-    }
-
     @PutMapping(path = "/update")
-    public String update(@Valid @ModelAttribute("user") User user, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "/updateUser";
-        } else {
+    public String update(@Valid @ModelAttribute("user") User user, @RequestParam("roles") List<Role> roles) {
+            System.out.println(user);
             UserEntity userEntity = entityAppService.getById(user.getId());
-            userEntity.setName(user.getName());
-            userEntity.setSurname(user.getSurname());
-            userEntity.setAge(user.getAge());
-            userEntity.setEmail(user.getEmail());
+            userEntity.fromUser(user);
+            if (!roles.isEmpty()) {
+                userEntity.setRoles(roles);
+            }
             entityAppService.saveOrUpdate(userEntity);
             return "redirect:/admin";
-        }
     }
 
     @DeleteMapping(path = "/deleteUser")
@@ -67,15 +57,6 @@ public class AdminController {
         UserEntity entity = entityAppService.getById(id);
         entityAppService.remove(entity);
         return "redirect:/admin";
-    }
-
-    @GetMapping(path = "/createUser")
-    public String createUser(ModelMap model) {
-        UserEntity userEntity = new UserEntity();
-        List<Role> roleList = roleAppService.getAll();
-        model.addAttribute("user", userEntity);
-        model.addAttribute("roleList", roleList);
-        return "createUser";
     }
 
     @PostMapping(path = "/create")

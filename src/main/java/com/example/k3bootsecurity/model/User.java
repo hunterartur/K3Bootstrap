@@ -1,6 +1,5 @@
 package com.example.k3bootsecurity.model;
 
-import javax.persistence.Column;
 import javax.validation.constraints.*;
 
 public class User {
