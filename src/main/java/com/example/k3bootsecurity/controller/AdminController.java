@@ -4,6 +4,7 @@ import com.example.k3bootsecurity.entity.Role;
 import com.example.k3bootsecurity.entity.UserEntity;
 import com.example.k3bootsecurity.model.User;
 import com.example.k3bootsecurity.service.AppService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,9 +13,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@PreAuthorize("hasAnyRole('ADMIN')")
 @Controller
 @RequestMapping(path = "/admin")
 public class AdminController {
@@ -30,13 +33,15 @@ public class AdminController {
     }
 
     @GetMapping(path = "")
-    public String allUsers(ModelMap model) {
+    public String allUsers(ModelMap model, Principal principal) {
         List<UserEntity> entities = entityAppService.getAll();
         List<User> users = entities.stream().map(UserEntity::toUser).collect(Collectors.toList());
         List<Role> roleList = roleAppService.getAll();
+        UserEntity userEntity = entityAppService.getByName(principal.getName());
         model.addAttribute("users", users);
         model.addAttribute("newUser", new UserEntity());
         model.addAttribute("roleList", roleList);
+        model.addAttribute("principal", userEntity);
         return "index";
     }
 
