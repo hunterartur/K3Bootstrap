@@ -4,6 +4,7 @@ import com.example.k3bootsecurity.entity.Role;
 import com.example.k3bootsecurity.exception.RoleNotFoundException;
 import com.example.k3bootsecurity.repository.RoleRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 

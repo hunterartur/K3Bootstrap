@@ -22,7 +22,6 @@ public class UserEntityAppServiceImpl implements AppService<UserEntity>, UserDet
         this.repository = repository;
     }
 
-    @Transactional
     @Override
     public UserEntity getByName(String name) {
         return repository.findByEmail(name).orElseThrow(() -> new UsernameNotFoundException(String.format(USER_NOT_FOUND_BY_NAME_MSG, name)));
@@ -48,6 +47,7 @@ public class UserEntityAppServiceImpl implements AppService<UserEntity>, UserDet
         repository.delete(object);
     }
 
+    @Transactional
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return repository
